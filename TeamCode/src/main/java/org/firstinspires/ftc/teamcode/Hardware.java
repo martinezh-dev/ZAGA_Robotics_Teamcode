@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -20,11 +23,12 @@ public class Hardware
     // Declare ballBlaster
     private DcMotor ballBlaster;
     private DcMotor intake;
+
+    private VisionPortal webcam;
     
     public void init(HardwareMap hardwareMap)    
     {
         // Initialize the hardware variables
-
         //Motors 
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
@@ -43,9 +47,14 @@ public class Hardware
 
         ballBlaster.setDirection(DcMotor.Direction.FORWARD);
         intake.setDirection(DcMotor.Direction.REVERSE);
-        
-        //camera
-        //camera = hardwareMap.get(WebcamName.class, "Webcam 1");
+    }
+
+    public void initCamera(HardwareMap hardwareMap, AprilTagProcessor aprilTag)
+    {
+        webcam = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .addProcessor(aprilTag)
+                .build();
     }
 
     public void motors(double vertical, double horizontal, double rotation)
@@ -101,5 +110,10 @@ public class Hardware
                         backLeft.getPower(), backRight.getPower(),
                         intake.getPower(), ballBlaster.getPower()};
         return ret;
+    }
+
+    VisionPortal getWebcam()
+    {
+        return webcam;
     }
 }

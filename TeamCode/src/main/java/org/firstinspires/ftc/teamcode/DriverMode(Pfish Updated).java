@@ -52,7 +52,7 @@ public class DriverMode extends LinearOpMode
                 
             double max;
 
-//Gamepad 1 Settings
+            //Gamepad 1 Settings
             // Left vertical moves forward and back
             double vertical = -gamepad1.left_stick_y;  // Upward on y-stick gives negative value
             
@@ -84,7 +84,7 @@ public class DriverMode extends LinearOpMode
 
 
                 
-//Gamepad 2 Settings   
+            //Gamepad 2 Settings
 
 
                
