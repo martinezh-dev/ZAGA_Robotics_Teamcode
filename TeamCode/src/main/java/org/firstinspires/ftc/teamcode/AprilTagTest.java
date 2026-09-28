@@ -21,13 +21,13 @@ import java.util.concurrent.TimeUnit;
 public class AprilTagTest extends LinearOpMode
 {
     Hardware robot = new Hardware();
-    VisionPortal webcam;
+    VisionPortal webcam = null;
 
     private int targetTag = -1;
-    AprilTagProcessor aprilTag;
+    AprilTagProcessor aprilTag = null;
     AprilTagDetection detectedTag = null;
 
-    private int[] motorVals;
+    private double[] motorVals;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -35,8 +35,11 @@ public class AprilTagTest extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
-        robot.initCamera(hardwareMap, aprilTag);
-        initAprilTag();
+        //robot.initCamera(hardwareMap, aprilTag);
+        //initAprilTag();
+
+        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
+        webcam = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
 
         telemetry.addData(">", "Touch START to start");
         telemetry.update();
@@ -55,12 +58,14 @@ public class AprilTagTest extends LinearOpMode
                     detectedTag = detection;
                 }
             }
-            telemetry.addData("Found", "ID %d (%s)", detectedTag.id, detectedTag.metadata.name);
-            telemetry.addData("Range",  "%5.1f inches", detectedTag.ftcPose.range);
-            telemetry.addData("Bearing","%3.0f degrees", detectedTag.ftcPose.bearing);
-            telemetry.addData("Yaw","%3.0f degrees", detectedTag.ftcPose.yaw);
-            telemetry.addData("\n>","Drive using joysticks to find valid target\n");
-
+            if(detectedTag != null)
+            {
+                telemetry.addData("Found", "ID %d (%s)", detectedTag.id, detectedTag.metadata.name);
+                telemetry.addData("Range",  "%5.1f inches", detectedTag.ftcPose.range);
+                telemetry.addData("Bearing","%3.0f degrees", detectedTag.ftcPose.bearing);
+                telemetry.addData("Yaw","%3.0f degrees", detectedTag.ftcPose.yaw);
+                telemetry.addData("\n>","Drive using joysticks to find valid target\n");
+            }
             //use controllers to move the robot. Update the position in telemetry
             double max;
 
@@ -111,7 +116,7 @@ public class AprilTagTest extends LinearOpMode
             //Get the current values of the robot's motors for telemetry;
             //[0]: front left [1]: front right [2]: back left [3]: back right
             //[4]: intake [5]: blaster
-            motorVals = robot.getVals();
+            motorVals = robot.getValsPercise();
 
             // Update telemetry with appropriate data
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -123,7 +128,7 @@ public class AprilTagTest extends LinearOpMode
         }
     }
 
-    private void initAprilTag()
+    /*private void initAprilTag()
     {
         aprilTag = new AprilTagProcessor.Builder().build();
         // Adjust Image Decimation to trade-off detection-range for detection-rate.
@@ -136,5 +141,5 @@ public class AprilTagTest extends LinearOpMode
         aprilTag.setDecimation(2);
 
         webcam = robot.getWebcam();
-    }
+    }*/
 }
