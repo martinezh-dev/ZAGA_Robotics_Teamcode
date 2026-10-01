@@ -1,5 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import org.firstinspires.ftc.vision.VisionPortal;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -12,29 +24,29 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
-public class Hardware 
+public class Hardware
 {
     // Declare motors
     private DcMotor frontLeft;
     private DcMotor backLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
-    
+
     // Declare ballBlaster
     private DcMotor ballBlaster;
     private DcMotor intake;
 
-    private VisionPortal webcam;
-    
-    public void init(HardwareMap hardwareMap)    
+    //private VisionPortal webcam;
+
+    public void init(HardwareMap hardwareMap)
     {
         // Initialize the hardware variables
-        //Motors 
+        //Motors
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backRight = hardwareMap.get(DcMotor.class, "back_right");
-        
+
         // Activity motors
         ballBlaster = hardwareMap.get(DcMotor.class, "ballShooter");
         intake = hardwareMap.get(DcMotor.class, "intake");
@@ -49,13 +61,13 @@ public class Hardware
         intake.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void initCamera(HardwareMap hardwareMap, AprilTagProcessor aprilTag)
+    /*public void initCamera(HardwareMap hardwareMap, AprilTagProcessor aprilTag)
     {
         webcam = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .addProcessor(aprilTag)
                 .build();
-    }
+    }*/
 
     public void motors(double vertical, double horizontal, double rotation)
     {
@@ -100,20 +112,20 @@ public class Hardware
     int[] getVals()
     {
         int[] ret = {(int)(100*frontLeft.getPower()), (int)(100*frontRight.getPower()),
-                     (int)(100*backLeft.getPower()), (int)(100*backRight.getPower()),
-                     (int)(100*intake.getPower()), (int)(100*ballBlaster.getPower())};
+                (int)(100*backLeft.getPower()), (int)(100*backRight.getPower()),
+                (int)(100*intake.getPower()), (int)(100*ballBlaster.getPower())};
         return ret;
     }
     double[] getValsPercise()
     {
         double[] ret = {frontLeft.getPower(), frontRight.getPower(),
-                        backLeft.getPower(), backRight.getPower(),
-                        intake.getPower(), ballBlaster.getPower()};
+                backLeft.getPower(), backRight.getPower(),
+                intake.getPower(), ballBlaster.getPower()};
         return ret;
     }
 
-    VisionPortal getWebcam()
+    /*VisionPortal getWebcam()
     {
         return webcam;
-    }
+    }*/
 }
