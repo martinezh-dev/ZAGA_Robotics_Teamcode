@@ -35,11 +35,6 @@ public class AprilTagTest extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
-        //robot.initCamera(hardwareMap, aprilTag);
-        //initAprilTag();
-
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        webcam = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
 
         telemetry.addData(">", "Touch START to start");
         telemetry.update();
@@ -49,16 +44,9 @@ public class AprilTagTest extends LinearOpMode
 
         while(opModeIsActive())
         {
-            //add the last detected tag to the telemetry
-            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-            for(AprilTagDetection detection: currentDetections)
-            {
-                if(detection.metadata != null)
-                {
-                    detectedTag = detection;
-                    telemetry.addData("Tag found", true);
-                }
-            }
+
+            AprilTagDetection detectedTag = robot.getDetection();
+
             if(detectedTag != null)
             {
                 telemetry.addData("Found", "ID %d (%s)", detectedTag.id, detectedTag.metadata.name);

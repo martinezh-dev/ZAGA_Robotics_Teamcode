@@ -23,21 +23,21 @@ Gamepad Key:
                 Right Stick: Towards the back brings balls into ramp and the death-wheel
 */
 
-public class DriverMode extends LinearOpMode 
+public class DriverMode extends LinearOpMode
 {
-        
+
     // Initialize variable that gives elapsed time
     private ElapsedTime runtime = new ElapsedTime();
-    
+
     private Hardware robot = new Hardware();
-    private int[] motorVals;
+    private double[] motorVals;
 
 
     @Override
-    public void runOpMode() 
+    public void runOpMode()
     {
         robot.init(hardwareMap);
-        
+
         // Outputs that robot is initialized
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -47,21 +47,21 @@ public class DriverMode extends LinearOpMode
         runtime.reset();
 
         // Runs until opMode is disabled
-        while (opModeIsActive()) 
+        while (opModeIsActive())
         {
-                
+
             double max;
 
             //Gamepad 1 Settings
             // Left vertical moves forward and back
             double vertical = -gamepad1.left_stick_y;  // Upward on y-stick gives negative value
-            
+
             // Left horizontal goes right and left
             double horizontal = gamepad1.left_stick_x;
-            
+
             // Right hoirzontal rotates
             double rotation = gamepad1.right_stick_x;
-            
+
             // Allows for more precise movements if left trigger is held
             if(gamepad1.left_trigger > 0)
             {
@@ -70,7 +70,7 @@ public class DriverMode extends LinearOpMode
                 rotation /= 3;
             }
 
-                            // Test code that powers each motor individually based on gamepad input
+            // Test code that powers each motor individually based on gamepad input
             
             /*
             leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X button
@@ -83,26 +83,26 @@ public class DriverMode extends LinearOpMode
             robot.motors(vertical, horizontal, rotation);
 
 
-                
+
             //Gamepad 2 Settings
 
 
-               
-            
+
+
             if (gamepad2.right_trigger > 0.1) {
                 robot.setBlaseter(1.0);
             }
             else {
                 robot.setBlaseter(0.0);
             }
-            
+
             // Gamepad2 right vertical controls intake system
             robot.setIntake(gamepad2.right_stick_y);
 
             //Get the current values of the robot's motors for telemetry;
             //[0]: front left [1]: front right [2]: back left [3]: back right
             //[4]: intake [5]: blaster
-            motorVals = robot.getVals();
+            motorVals = robot.getValsPercise();
 
             // Update telemetry with appropriate data
             telemetry.addData("Status", "Run Time: " + runtime.toString());

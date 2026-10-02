@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.vision.VisionPortal;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -24,6 +26,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hardware
 {
     // Declare motors
@@ -36,7 +41,7 @@ public class Hardware
     private DcMotor ballBlaster;
     private DcMotor intake;
 
-    //private VisionPortal webcam;
+    private Camera webcam;
 
     public void init(HardwareMap hardwareMap)
     {
@@ -59,6 +64,9 @@ public class Hardware
 
         ballBlaster.setDirection(DcMotor.Direction.FORWARD);
         intake.setDirection(DcMotor.Direction.REVERSE);
+
+        webcam = new Camera();
+        webcam.init(hardwareMap);
     }
 
     /*public void initCamera(HardwareMap hardwareMap, AprilTagProcessor aprilTag)
@@ -107,6 +115,19 @@ public class Hardware
     public void setBlaseter(double power)
     {
         ballBlaster.setPower(power);
+    }
+
+    public AprilTagDetection getDetection()
+    {
+        List<AprilTagDetection> list = webcam.getTags();
+        for(AprilTagDetection detection : list)
+        {
+            if(detection.metadata != null)
+            {
+                return detection;
+            }
+        }
+        return null;
     }
 
     int[] getVals()
