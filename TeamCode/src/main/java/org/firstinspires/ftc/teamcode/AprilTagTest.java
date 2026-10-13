@@ -36,7 +36,7 @@ public class AprilTagTest extends LinearOpMode
     {
         robot.init(hardwareMap);
 
-        telemetry.addData(">", "Touch START to start");
+        telemetry.addData("Type", " Shi");
         telemetry.update();
 
         waitForStart();
