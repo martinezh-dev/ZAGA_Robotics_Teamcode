@@ -41,6 +41,8 @@ public class Hardware
     private DcMotor ballBlaster;
     private DcMotor intake;
 
+    private Servo whacker;
+
     private Camera webcam;
 
     public void init(HardwareMap hardwareMap)
@@ -56,6 +58,7 @@ public class Hardware
         ballBlaster = hardwareMap.get(DcMotor.class, "ballShooter");
         intake = hardwareMap.get(DcMotor.class, "intake");
 
+        whacker = hardwareMap.get(Servo.class, "whacker");
         // Initialize direction of motors
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -106,6 +109,23 @@ public class Hardware
         frontRight.setPower(rightFrontPower);
         backLeft.setPower(leftBackPower);
         backRight.setPower(rightBackPower);
+    }
+
+    public void whack(int value)
+    {
+        whacker.setPosition(value);
+    }
+
+    public void switchDirection()
+    {
+        if(whacker.getDirection() == Servo.Direction.FORWARD)
+        {
+            whacker.setDirection(Servo.Direction.REVERSE);
+        }
+        else
+        {
+            whacker.setDirection(Servo.Direction.FORWARD);
+        }
     }
 
     public void setIntake(double power)
