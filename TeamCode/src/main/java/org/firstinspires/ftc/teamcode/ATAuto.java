@@ -11,8 +11,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 public class ATAuto extends LinearOpMode
 {
     private Hardware robot;
-    private double targetID;
-    private double targetDistance;
+    private double targetID = 35;
+    private double targetDistance = 24;
     private ElapsedTime runtime = new ElapsedTime();
     private double[] motorVals;
 

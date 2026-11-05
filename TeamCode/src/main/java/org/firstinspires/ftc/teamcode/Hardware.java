@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.vision.VisionPortal;
+
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -39,7 +41,8 @@ public class Hardware
 
     // Declare ballBlaster
     private DcMotor ballBlaster;
-    private DcMotor intake;
+    private DcMotor intake1;
+    private DcMotor intake2;
 
     private Servo whacker;
 
@@ -56,7 +59,8 @@ public class Hardware
 
         // Activity motors
         ballBlaster = hardwareMap.get(DcMotor.class, "ballShooter");
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        intake1 = hardwareMap.get(DcMotor.class, "intake1");
+        intake2 = hardwareMap.get(DcMotor.class, "intake2");
 
         whacker = hardwareMap.get(Servo.class, "whacker");
         // Initialize direction of motors
@@ -66,7 +70,8 @@ public class Hardware
         backRight.setDirection(DcMotor.Direction.FORWARD);
 
         ballBlaster.setDirection(DcMotor.Direction.FORWARD);
-        intake.setDirection(DcMotor.Direction.REVERSE);
+        intake1.setDirection(DcMotor.Direction.REVERSE);
+        intake2.setDirection(DcMotor.Direction.REVERSE);
 
         webcam = new Camera();
         webcam.init(hardwareMap);
@@ -128,9 +133,13 @@ public class Hardware
         }
     }
 
-    public void setIntake(double power)
+    public void setIntake1(double power)
     {
-        intake.setPower(power);
+        intake1.setPower(power);
+    }
+    public void setIntake2(double power)
+    {
+        intake2.setPower(power);
     }
     public void setBlaseter(double power)
     {
@@ -154,14 +163,14 @@ public class Hardware
     {
         int[] ret = {(int)(100*frontLeft.getPower()), (int)(100*frontRight.getPower()),
                 (int)(100*backLeft.getPower()), (int)(100*backRight.getPower()),
-                (int)(100*intake.getPower()), (int)(100*ballBlaster.getPower())};
+                (int)(100*intake1.getPower()), (int)(100*ballBlaster.getPower())};
         return ret;
     }
     double[] getValsPercise()
     {
         double[] ret = {frontLeft.getPower(), frontRight.getPower(),
                 backLeft.getPower(), backRight.getPower(),
-                intake.getPower(), ballBlaster.getPower()};
+                intake1.getPower(), ballBlaster.getPower(), whacker.getPosition()};
         return ret;
     }
 

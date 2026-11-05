@@ -32,6 +32,10 @@ public class DriverMode extends LinearOpMode
     private Hardware robot = new Hardware();
     private double[] motorVals;
 
+    private final double MAX_OUT = 0.85;
+    private final double MAX_IN = 0.65;
+
+
 
     @Override
     public void runOpMode()
@@ -45,6 +49,8 @@ public class DriverMode extends LinearOpMode
         // Wait for start and set runtime to 0
         waitForStart();
         runtime.reset();
+
+        robot.whack(90);
 
         // Runs until opMode is disabled
         while (opModeIsActive())
@@ -90,16 +96,17 @@ public class DriverMode extends LinearOpMode
 
 
             if (gamepad2.right_trigger > 0.1) {
-                robot.setBlaseter(1.0);
+                robot.setBlaseter(MAX_OUT);
             }
             else {
                 robot.setBlaseter(0.0);
             }
 
-            robot.whack((int)(30 * gamepad2.left_stick_x));
+            //robot.whack((int)(180*gamepad2.left_stick_x));
 
             // Gamepad2 right vertical controls intake system
-            robot.setIntake(gamepad2.right_stick_y);
+            robot.setIntake1(Math.min(gamepad2.right_stick_y, MAX_IN));
+            robot.setIntake2(Math.min(gamepad2.left_stick_y, MAX_IN));
 
             //Get the current values of the robot's motors for telemetry;
             //[0]: front left [1]: front right [2]: back left [3]: back right
@@ -112,6 +119,7 @@ public class DriverMode extends LinearOpMode
             telemetry.addData("Back  Left/Right", "%4.2f, %4.2f", motorVals[2], motorVals[3]);
             telemetry.addData("Blaster Power", "%4.2f", motorVals[5]);
             telemetry.addData("Intake", "%4.2f", motorVals[4]);
+            telemetry.addData("Whacker Position", "%4.2f", motorVals[6]);
             telemetry.update();
         }
     }

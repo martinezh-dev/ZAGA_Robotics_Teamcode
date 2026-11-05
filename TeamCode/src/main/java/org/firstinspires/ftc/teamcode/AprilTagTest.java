@@ -100,7 +100,8 @@ public class AprilTagTest extends LinearOpMode
             }
 
             // Gamepad2 right vertical controls intake system
-            robot.setIntake(gamepad2.right_stick_y);
+            robot.setIntake1(gamepad2.right_stick_y);
+            robot.setIntake2(gamepad2.left_stick_y);
 
             //Get the current values of the robot's motors for telemetry;
             //[0]: front left [1]: front right [2]: back left [3]: back right
