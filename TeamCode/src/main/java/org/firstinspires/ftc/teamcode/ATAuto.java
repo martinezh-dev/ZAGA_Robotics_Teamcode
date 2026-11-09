@@ -11,7 +11,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 public class ATAuto extends LinearOpMode
 {
     private Hardware robot;
-    private double targetID = 35;
+    private int targetID = 37;
     private double targetDistance = 24;
     private ElapsedTime runtime = new ElapsedTime();
     private double[] motorVals;
@@ -29,8 +29,21 @@ public class ATAuto extends LinearOpMode
 
         waitForStart();
         runtime.reset();
-        AprilTagDetection detection = robot.getDetection();
 
+        AprilTagDetection detection = robot.getDetection(targetID);
+
+        while(opModeIsActive() && detection == null)
+        {
+            detection = robot.getDetection(targetID);
+        }
+        if(opModeIsActive())
+            telemetry.addData("Tag Found", "");
+
+        while(opModeIsActive())
+        {
+            telemetry.update();
+        }
+        /*
         while(detection.id != targetID) {
             robot.motors(0, 0, 0.5);
         }
@@ -89,6 +102,6 @@ public class ATAuto extends LinearOpMode
             {
                 robot.motors(0.5,0,0);
             }
-        }
+        }*/
     }
 }

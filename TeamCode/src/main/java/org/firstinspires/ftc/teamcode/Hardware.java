@@ -146,17 +146,22 @@ public class Hardware
         ballBlaster.setPower(power);
     }
 
-    public AprilTagDetection getDetection()
+    public AprilTagDetection getDetection(int id)
     {
         List<AprilTagDetection> list = webcam.getTags();
         for(AprilTagDetection detection : list)
         {
-            if(detection.metadata != null)
+            if(detection.metadata != null && detection.metadata.id == id)
             {
                 return detection;
             }
         }
         return null;
+    }
+
+    public Camera getCamera()
+    {
+        return webcam;
     }
 
     int[] getVals()

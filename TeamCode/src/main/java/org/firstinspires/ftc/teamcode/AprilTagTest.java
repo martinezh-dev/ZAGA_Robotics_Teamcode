@@ -12,8 +12,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.Exposur
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagLibrary;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +23,13 @@ import java.util.concurrent.TimeUnit;
 public class AprilTagTest extends LinearOpMode
 {
     Hardware robot = new Hardware();
-    VisionPortal webcam = null;
-
-    private int targetTag = -1;
+    //VisionPortal webcam = null;
+    //AprilTagLibrary my
+    private int targetTag = 11;
     AprilTagProcessor aprilTag = null;
     AprilTagDetection detectedTag = null;
+
+    private Camera webcam;
 
     private double[] motorVals;
 
@@ -35,6 +39,7 @@ public class AprilTagTest extends LinearOpMode
     public void runOpMode()
     {
         robot.init(hardwareMap);
+        webcam = robot.getCamera();
 
         telemetry.addData("Type", " Shi");
         telemetry.update();
@@ -45,16 +50,27 @@ public class AprilTagTest extends LinearOpMode
         while(opModeIsActive())
         {
 
-            AprilTagDetection detectedTag = robot.getDetection();
+            //AprilTagDetection detectedTag = robot.getDetection(targetTag);
+            AprilTagDetection detection = robot.getDetection(37);
+            /*
+            for(AprilTagDetection detection : detections) {
 
-            if(detectedTag != null)
+                if (detection != null) {
+                    telemetry.addData("Found", "ID %d (%s)", detection.id, "name");
+                    telemetry.addData("Range", "%5.1f inches", detection.ftcPose.range);
+                    /*telemetry.addData("Bearing", "%3.0f degrees", detection.ftcPose.bearing);
+                    telemetry.addData("Yaw", "%3.0f degrees", detection.ftcPose.yaw);
+                    telemetry.addData("\n>", "Drive using joysticks to find valid target\n");
+                    //telemetry.update();
+                }
+            }*/
+
+            if(detection != null)
             {
-                telemetry.addData("Found", "ID %d (%s)", detectedTag.id, detectedTag.metadata.name);
-                telemetry.addData("Range",  "%5.1f inches", detectedTag.ftcPose.range);
-                telemetry.addData("Bearing","%3.0f degrees", detectedTag.ftcPose.bearing);
-                telemetry.addData("Yaw","%3.0f degrees", detectedTag.ftcPose.yaw);
-                telemetry.addData("\n>","Drive using joysticks to find valid target\n");
+                telemetry.addData("Found", "ID %d (%s)", detection.id, detection.metadata.name);
+
             }
+
             //use controllers to move the robot. Update the position in telemetry
             double max;
 

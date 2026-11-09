@@ -58,7 +58,7 @@ public class DriverMode extends LinearOpMode
         waitForStart();
         runtime.reset();
 
-        robot.whack(90);
+        //robot.whack(90);
 
         // Runs until opMode is disabled
         while (opModeIsActive())
