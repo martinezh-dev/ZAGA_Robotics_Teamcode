@@ -99,7 +99,7 @@ public class DriverMode extends LinearOpMode
             */
 
             // Power wheels
-            robot.motors(vertical, horizontal, rotation);
+            robot.motors(vertical * flipDrive, horizontal * flipDrive, rotation);
 
 
 
