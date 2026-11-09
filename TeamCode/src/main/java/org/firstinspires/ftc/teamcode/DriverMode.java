@@ -105,11 +105,17 @@ public class DriverMode extends LinearOpMode
 
             //Gamepad 2 Settings
 
-
-
-
-            if (gamepad2.right_trigger > 0.1) {
-                robot.setBlaseter(MAX_OUT);
+            double blaster = 0;
+            if(gamepad2.aWasReleased())
+            {
+                blasterDir *= -1;
+            }
+            if(gamepad2.yWasReleased())
+            {
+                blasting = !blasting;
+            }
+            if (blasting) {
+                blaster = MAX_OUT * blasterDir;
             }
             else {
                 robot.setBlaseter(0.0);
