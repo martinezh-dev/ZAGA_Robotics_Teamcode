@@ -136,9 +136,15 @@ public class DriverMode extends LinearOpMode
                 intake2 = MAX_IN;
             }
 
-            // Gamepad2 right vertical controls intake system
-            robot.setIntake1(Math.min(gamepad2.right_stick_y, MAX_IN));
-            robot.setIntake2(Math.min(gamepad2.left_stick_y, MAX_IN));
+            if(gamepad2.left_trigger_pressed)
+            {
+                intake1 /= 3;
+                intake2 /= 3;
+                blaster /= 3;
+            }
+            robot.setIntake1(intake1);
+            robot.setIntake2(intake2);
+            robot.setBlaseter(blaster);
 
             //Get the current values of the robot's motors for telemetry;
             //[0]: front left [1]: front right [2]: back left [3]: back right
