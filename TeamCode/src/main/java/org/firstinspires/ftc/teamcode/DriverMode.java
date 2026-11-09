@@ -35,6 +35,14 @@ public class DriverMode extends LinearOpMode
     private final double MAX_OUT = 0.85;
     private final double MAX_IN = 0.65;
 
+    private boolean blasting = false;
+
+    private boolean inputting = false;
+
+    private int blasterDir = 1;
+
+    private int flipDrive = 1;
+
 
 
     @Override
