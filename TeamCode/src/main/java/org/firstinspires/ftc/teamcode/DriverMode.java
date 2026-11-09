@@ -84,6 +84,11 @@ public class DriverMode extends LinearOpMode
                 rotation /= 3;
             }
 
+            if(gamepad1.aWasReleased())
+            {
+                flipDrive *= -1;
+            }
+
             // Test code that powers each motor individually based on gamepad input
             
             /*
