@@ -118,7 +118,12 @@ public class DriverMode extends LinearOpMode
                 blaster = MAX_OUT * blasterDir;
             }
             else {
-                robot.setBlaseter(0.0);
+                blaster = gamepad2.right_trigger*MAX_OUT * blasterDir;
+            }
+
+            if(gamepad2.bWasReleased())
+            {
+                inputting = !inputting;
             }
 
             //robot.whack((int)(180*gamepad2.left_stick_x));
