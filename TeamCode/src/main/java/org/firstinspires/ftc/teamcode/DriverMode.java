@@ -126,7 +126,15 @@ public class DriverMode extends LinearOpMode
                 inputting = !inputting;
             }
 
-            //robot.whack((int)(180*gamepad2.left_stick_x));
+
+            double intake1 = gamepad2.right_stick_y * MAX_IN;
+            double intake2 = gamepad2.left_stick_y * MAX_IN;
+
+            if(inputting)
+            {
+                intake1 = MAX_IN;
+                intake2 = MAX_IN;
+            }
 
             // Gamepad2 right vertical controls intake system
             robot.setIntake1(Math.min(gamepad2.right_stick_y, MAX_IN));
