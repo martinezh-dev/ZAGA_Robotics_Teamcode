@@ -39,16 +39,12 @@ public class ATAuto extends LinearOpMode
         if(opModeIsActive())
             telemetry.addData("Tag Found", "");
 
-        while(opModeIsActive())
-        {
-            telemetry.update();
-        }
-        /*
-        while(detection.id != targetID) {
+
+        while(opModeIsActive() && detection.id != targetID) {
             robot.motors(0, 0, 0.5);
         }
         robot.motors(0,0,0);
-        if(detection != null)
+        if(opModeIsActive() && detection != null)
         {
             telemetry.addData("Found", "ID %d (%s)", detection.id, detection.metadata.name);
             telemetry.addData("Range",  "%5.1f inches", detection.ftcPose.range);
@@ -102,6 +98,6 @@ public class ATAuto extends LinearOpMode
             {
                 robot.motors(0.5,0,0);
             }
-        }*/
+        }
     }
 }
